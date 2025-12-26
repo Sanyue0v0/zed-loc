@@ -295,12 +295,12 @@ jobs:
 
       - name: mac
         run: |
-          mv artifacts/zed-mac/Zed-aarch64.dmg Zed-aarch64.dmg
-          mv artifacts/zed-mac/Zed-x86_64.dmg Zed-x86_64.dmg
+          cp -r artifacts/zed-mac/* . 2>/dev/null || true
 
       - name: build sha256
         run: |
-          sha256sum zed-windows.zip zed-linux-x86_64.deb zed-linux-arm64.deb zed-linux-x86_64.tar.gz zed-linux-arm64.tar.gz Zed-aarch64.dmg Zed-x86_64.dmg > sha256sums.txt
+          sha256sum *.zip *.deb *.tar.gz *.dmg > sha256sums.txt
+
       - name: Upload release build artifacts to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -309,11 +309,8 @@ jobs:
           draft: false
           make_latest: true
           files: |
-            zed-windows.zip
-            zed-linux-x86_64.deb
-            zed-linux-arm64.deb
-            zed-linux-x86_64.tar.gz
-            zed-linux-arm64.tar.gz
-            Zed-aarch64.dmg
-            Zed-x86_64.dmg
+            *.zip
+            *.deb
+            *.tar.gz
+            *.dmg
             sha256sums.txt
