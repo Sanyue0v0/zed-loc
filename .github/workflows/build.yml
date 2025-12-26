@@ -260,8 +260,7 @@ jobs:
         with:
           name: zed-mac
           path: |
-            Zed-aarch64.dmg
-            Zed-x86_64.dmg
+            Zed-*.dmg
 
   release:
     if: (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch' && inputs.release)
