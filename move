@@ -28,16 +28,16 @@ echo "Processing nightly for target: $target"
 bucket_name="zed-nightly-host"
 
 sha=$(git rev-parse HEAD)
-echo ${sha} > target/latest-sha
+echo ${sha} > zed/target/latest-sha
 
-find target -type f -name "zed-remote-server-*.gz" -print0 | while IFS= read -r -d '' file_to_move; do
+find zed/target -type f -name "zed-remote-server-*.gz" -print0 | while IFS= read -r -d '' file_to_move; do
     mv "$file_to_move" "$(basename "$file_to_move")"
 done
 
 case "$target" in
     macos)
-        mv "zed/target/aarch64-apple-darwin/release/Zed.dmg" "Zed-aarch64.dmg"
-        mv "zed/target/x86_64-apple-darwin/release/Zed.dmg" "Zed-x86_64.dmg"
+        mv "zed/target/aarch64-apple-darwin/release/Zed-aarch64.dmg" "Zed-aarch64.dmg" 2>/dev/null || true
+        mv "zed/target/x86_64-apple-darwin/release/Zed-x86_64.dmg" "Zed-x86_64.dmg" 2>/dev/null || true
         mv "zed/target/latest-sha" "latest-sha"
         ;;
     linux-targz)
